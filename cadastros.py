@@ -1,5 +1,5 @@
 from database import conectar
-
+import bcrypt
 
 def criar_usuario():
 
@@ -25,13 +25,16 @@ def criar_usuario():
 
     senha_usuario = input('Qual a senha do usuário? ')
 
+    senha_usuario = senha_usuario.encode()
+    senha_hash = bcrypt.hashpw(senha_usuario, bcrypt.gensalt())
+
     sql = """
     INSERT INTO USUARIOS
     (nome, senha)
     VALUES (%s, %s)
     """
 
-    cursor.execute(sql, (nome_usuario, senha_usuario))
+    cursor.execute(sql, (nome_usuario, senha_hash))
     conexao.commit()
 
     cursor.close()

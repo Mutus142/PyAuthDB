@@ -1,4 +1,5 @@
 from database import conectar
+import bcrypt
 
 def entrar():
 
@@ -19,6 +20,8 @@ def entrar():
         if resultado:
             senha_usuario = input('Qual é a senha? ')
 
+            senha_usuario = senha_usuario.encode()
+
             sql = """
             SELECT SENHA
             FROM USUARIOS
@@ -28,7 +31,7 @@ def entrar():
             cursor.execute(sql, (nome_usuario,))
             resultados = cursor.fetchone()
 
-            if resultados[0] == senha_usuario:
+            if bcrypt.checkpw(senha_usuario, resultados[0].encode()):
                 print('Login Efetuado!')
 
             else:
