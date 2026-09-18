@@ -45,13 +45,14 @@ def excluir_usuario():
     conexao = conectar()
     cursor = conexao.cursor()
 
-    nome_usuario = input('Qual é o nome do usuário?')
+    nome_usuario = input('Qual é o nome do usuário? ')
 
     sql = """
     SELECT NOME
     FROM USUARIOS
     WHERE NOME = %s
     """
+
     cursor.execute(sql, (nome_usuario,))
     resultado = cursor.fetchone()
 
@@ -60,17 +61,19 @@ def excluir_usuario():
 
         if escolha == 's':
 
-        sql = """
-        DELETE 
-        FROM USUARIOS
-        WHERE NOME = %s
-        """
+            sql = """
+            DELETE
+            FROM USUARIOS
+            WHERE NOME = %s
+            """
 
-        cursor.execute(sql, (nome_usuario,))
-        resultado = cursor.fetchone()
-        conexao.commit()
+            cursor.execute(sql, (nome_usuario,))
+            conexao.commit()
 
-        print('Usuário excluido...')
+            print('Usuário excluído...')
+
+        else:
+            print('Operação cancelada!')
 
     else:
         print('Usuário não encontrado!')
