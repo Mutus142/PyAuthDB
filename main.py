@@ -1,5 +1,3 @@
-print('MAIN INICIO')
-
 from cadastros import *
 from login import *
 

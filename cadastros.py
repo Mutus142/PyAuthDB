@@ -81,6 +81,31 @@ def excluir_usuario():
     cursor.close()
     conexao.close()
 
+def ver():
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    sql = """
+    SELECT ID_USUARIO, NOME
+    FROM USUARIOS
+    """
+
+    cursor.execute(sql)
+    resultado = cursor.fetchall()
+
+    if not resultado:
+        print('Nenhum usuário cadastrado!')
+
+    else:
+        for id_usuario, nome in resultado:
+            print(f'''
+            Nome: {nome}
+            ID: {id_usuario}''')
+
+    cursor.close()
+    conexao.close()
+
 
 def cadastro():
 
@@ -89,7 +114,8 @@ def cadastro():
         print('''
         1 - Cadastrar Usuário
         2 - Excluir Usuário
-        3 - Voltar
+        3 - Ver Usuários
+        4 - Voltar
         ''')
 
         escolha = int(input('Escolha uma opção: '))
@@ -103,9 +129,13 @@ def cadastro():
             print('Loading...')
 
         elif escolha == 3:
+            ver()
+            print('Loading...')
+
+        elif escolha == 4:
             print('Voltando...')
             return
-
+        
         else:
             print('Opção inválida!')
             continue
